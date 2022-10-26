@@ -1,9 +1,37 @@
 ---
-- mame: Setup for the Ansible's Environment
+- name: Setup for the Ansible's Environment
   hosts: localhost
   gather_facts: no
 
   tasks:
+    - name: Add "/etc/hosts"
+      blockinfile:
+        path: /etc/hosts
+        block: |
+          192.168.219.10 server
+          192.168.219.11 node01
+          192.168.219.12 node02
+    
+    - name: Add "/etc/ansible/hosts"
+      blockinfile:
+        path: /etc/ansible/hosts
+        block: |
+          [CentOS]
+          node01
+          node02
+    
+    - name: Install sshpass for Authentication
+      yum:
+        name: sshpass
+        state: present
+
+    - name: Create vim env's directories & files
+      shell: "{{ item }}"
+      with_items:
+        - "mkdir -p /home/vagrant/.vim/autoload /home/vagrant/.vim/bundle"
+        - "touch /home/vagrant/.vimrc"
+        - "touch /home/vagrant/.bashrc"
+      
     - name: Install vim-enhanced
       yum:
         name: vim-enhanced
@@ -15,7 +43,8 @@
         state: present
 
     - name: Download pathogen.vim
-      shell: "curl -fLo ~home/vagrant/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim"
+      shell: "curl -fLo /home/vagrant/.vim/autoload/pathogen.vim
+              https://tpo.pe/pathogen.vim"
 
     - name: Git clone vim-ansible-yaml
       git:
@@ -24,7 +53,7 @@
 
     - name: Configure vimrc
       lineinfile:
-        dest: /home/vagrant/.vimrc
+        path: /home/vagrant/.vimrc
         line: "{{ item }}"
       with_items:
         - "set number"
@@ -33,7 +62,7 @@
 
     - name: Configure Bashrc
       lineinfile:
-        dest: /home/vagrant/.bashrc
+        path: /home/vagrant/.bashrc
         line: "{{ item }}"
       with_items:
         - "alias vi='vim'"
