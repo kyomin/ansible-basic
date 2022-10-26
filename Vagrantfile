@@ -20,6 +20,9 @@ Vagrant.configure(Vagrant_API_Version) do |config|
     # 네트워크 설정
     cfg.vm.network "public_network", ip: "192.168.219.11"
     cfg.vm.network "forwarded_port", guest: 22, host: 60011, auto_correct: false, id: "ssh"
+
+    # 프로비저닝 설정
+    cfg.vm.provision "shell", path: "bash_ssh_conf_4_CentOS.sh"
   end
 
   #================#
@@ -38,6 +41,9 @@ Vagrant.configure(Vagrant_API_Version) do |config|
     # 네트워크 설정
     cfg.vm.network "public_network", ip: "192.168.219.12"
     cfg.vm.network "forwarded_port", guest: 22, host: 60012, auto_correct: false, id: "ssh"
+
+    # 프로비저닝 설정
+    cfg.vm.provision "shell", path: "bash_ssh_conf_4_CentOS.sh"
   end
 
   #================#
@@ -61,5 +67,7 @@ Vagrant.configure(Vagrant_API_Version) do |config|
     cfg.vm.provision "file", source: "Ansible_env_ready.yml", destination: "Ansible_env_ready.yml"  # 현재 경로에 있는 파일을 원격에 전송
     cfg.vm.provision "shell", inline: "ansible-playbook Ansible_env_ready.yml"  # 쉘 모듈을 이용해 해당 야믈 파일을 ansible-playbook 명령어로 실행
     cfg.vm.provision "shell", path: "add_ssh_auth.sh", privileged: false  # add_ssh_auth에 있는 쉘 명령어 실행
+    cfg.vm.provision "file", source: "Ansible_ssh_conf_4_CentOS.yml", destination: "Ansible_ssh_conf_4_CentOS.yml"
+    cfg.vm.provision "shell", inline: "ansible-playbook Ansible_ssh_conf_4_CentOS.yml"
   end
 end
