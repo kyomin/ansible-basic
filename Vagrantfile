@@ -4,7 +4,9 @@
 Vagrant_API_Version = "2"
 
 Vagrant.configure(Vagrant_API_Version) do |config|
-  # Ansible-Node01
+  #================#
+  # Ansible-Node01 #
+  #================#
   config.vm.define:"ansible-node01" do |cfg|
     cfg.vm.box = "centos/7"
     cfg.vm.provider:virtualbox do |vb|
@@ -17,10 +19,12 @@ Vagrant.configure(Vagrant_API_Version) do |config|
 
     # 네트워크 설정
     cfg.vm.network "public_network", ip: "192.168.219.11"
-    cfg.vm.network "forwarded_port", guest: 22, host: 19211, auto_correct: false, id: "ssh"
+    cfg.vm.network "forwarded_port", guest: 22, host: 60011, auto_correct: false, id: "ssh"
   end
 
-  # Ansible-Node02
+  #================#
+  # Ansible-Node02 #
+  #================#
   config.vm.define:"ansible-node02" do |cfg|
     cfg.vm.box = "centos/7"
     cfg.vm.provider:virtualbox do |vb|
@@ -33,10 +37,12 @@ Vagrant.configure(Vagrant_API_Version) do |config|
 
     # 네트워크 설정
     cfg.vm.network "public_network", ip: "192.168.219.12"
-    cfg.vm.network "forwarded_port", guest: 22, host: 19212, auto_correct: false, id: "ssh"
+    cfg.vm.network "forwarded_port", guest: 22, host: 60012, auto_correct: false, id: "ssh"
   end
 
-  # Ansible-Server
+  #================#
+  # Ansible Server #
+  #================#
   config.vm.define:"ansible-server" do |cfg|
     cfg.vm.box = "centos/7"
     cfg.vm.provider:virtualbox do |vb|
@@ -47,7 +53,7 @@ Vagrant.configure(Vagrant_API_Version) do |config|
   
     # 네트워크 설정
     cfg.vm.network "public_network", ip: "192.168.219.10"
-    cfg.vm.network "forwarded_port", guest: 22, host: 19210, auto_correct: false, id: "ssh"
+    cfg.vm.network "forwarded_port", guest: 22, host: 60010, auto_correct: false, id: "ssh"
 
     # 프로비저닝 설정
     cfg.vm.provision "shell", inline: "yum install epel-release -y"
