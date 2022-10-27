@@ -69,5 +69,7 @@ Vagrant.configure(Vagrant_API_Version) do |config|
     cfg.vm.provision "shell", path: "add_ssh_auth.sh", privileged: false  # add_ssh_auth에 있는 쉘 명령어 실행
     cfg.vm.provision "file", source: "Ansible_ssh_conf_4_CentOS.yml", destination: "Ansible_ssh_conf_4_CentOS.yml"
     cfg.vm.provision "shell", inline: "ansible-playbook Ansible_ssh_conf_4_CentOS.yml"
+    cfg.vm.provision "file", source: "nginx_install.yml", destination: "nginx_install.yml"
+    cfg.vm.provision "file", source: "nginx_remove.yml", destination: "nginx_remove.yml"
   end
 end
