@@ -76,5 +76,6 @@ Vagrant.configure(Vagrant_API_Version) do |config|
     cfg.vm.provision "file", source: "nginx_install.yml", destination: "nginx_install.yml"
     cfg.vm.provision "file", source: "nginx_remove.yml", destination: "nginx_remove.yml"
     cfg.vm.provision "file", source: "timezone.yml", destination: "timezone.yml"
+    cfg.vm.provision "file", source: "nfs.yml", destination: "nfs.yml"
   end
 end
