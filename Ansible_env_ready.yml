@@ -28,7 +28,7 @@
           node04
 
           [Win]
-          node05
+          node05 ansible_connection=winrm ansible_user=vagrant ansible_port=5985
     
     - name: Install sshpass for Authentication
       yum:
@@ -78,3 +78,20 @@
         - "alias vi='vim'"
         - "alias ans='ansible'"
         - "alias anp='ansible-playbook'"
+
+    ###### Add for Windows node ######
+    - name: Install epel-release
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install pip
+      yum:
+        name: python-pip
+        state: present
+
+    - name: Install pywinrm
+      pip:
+        name: pywinrm
+        state: present
+    ###################################

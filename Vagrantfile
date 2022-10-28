@@ -91,8 +91,8 @@ Vagrant.configure(Vagrant_API_Version) do |config|
     cfg.vm.box = "sysnet4admin/Windows2016"
       cfg.vm.provider "virtualbox" do |vb|
         vb.name = "Ansible-Node05(Jake)"
-        vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
-        vb.gui = false
+        vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']  # 클립보드의 내용을 서로 공유하도록
+        vb.gui = false  # 부팅 시 가상 머신의 화면을 띄우지 않도록
       end
       cfg.vm.host_name = "ansible-node05"
       cfg.vm.network "public_network", ip: "192.168.219.15"
