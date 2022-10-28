@@ -106,8 +106,7 @@ Vagrant.configure(Vagrant_API_Version) do |config|
     cfg.vm.provision "file", source: "Ansible_ssh_conf_4_CentOS.yml", destination: "Ansible_ssh_conf_4_CentOS.yml"
     cfg.vm.provision "shell", inline: "ansible-playbook Ansible_ssh_conf_4_CentOS.yml"    
     
-    # 파일을 ansible-server로 옮긴 후, 원격 접속하여
-    # anp *.yml -k로 실행
+    # 파일을 ansible-server로 옮긴 후, 원격 접속하여 anp *.yml -k로 실행
     # 직접 원격 접속하여 vi 편집기로 내용 작성하는 것이 힘들기 때문에 이 방법을 택함
     cfg.vm.provision "file", source: "nginx_install.yml", destination: "nginx_install.yml"
     cfg.vm.provision "file", source: "nginx_remove.yml", destination: "nginx_remove.yml"

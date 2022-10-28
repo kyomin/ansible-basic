@@ -23,7 +23,7 @@
         state: restarted
 
 - name: Setup for nfs clients   # 플레이2
-  hosts: CentOS
+  hosts: CentOS:Ubuntu
   gather_facts: no
 
   tasks:

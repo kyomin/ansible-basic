@@ -1,6 +1,6 @@
 ---
 - name: Setup CentOS timezone
-  hosts: CentOS
+  hosts: CentOS:Ubuntu
   gather_facts: no
   become: yes
 
