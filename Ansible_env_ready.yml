@@ -13,6 +13,7 @@
           192.168.219.12 node02
           192.168.219.13 node03
           192.168.219.14 node04
+          192.168.219.15 node05
     
     - name: Add "/etc/ansible/hosts"
       blockinfile:
@@ -25,6 +26,9 @@
           [Ubuntu]
           node03
           node04
+
+          [Win]
+          node05
     
     - name: Install sshpass for Authentication
       yum:

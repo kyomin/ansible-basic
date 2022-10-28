@@ -82,6 +82,26 @@ Vagrant.configure(Vagrant_API_Version) do |config|
     cfg.vm.network "forwarded_port", guest: 22, host: 60014, auto_correct: false, id: "ssh"    
   end
 
+  #==============#
+  # Windows node #
+  #==============#
+
+  #Ansible-Node05
+  config.vm.define "ansible-node05" do |cfg|
+    cfg.vm.box = "sysnet4admin/Windows2016"
+      cfg.vm.provider "virtualbox" do |vb|
+        vb.name = "Ansible-Node05(Jake)"
+        vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
+        vb.gui = false
+      end
+      cfg.vm.host_name = "ansible-node05"
+      cfg.vm.network "public_network", ip: "192.168.219.15"
+      cfg.vm.network "forwarded_port", guest: 22, host: 60015, auto_correct: true, id: "ssh"
+      cfg.vm.synced_folder "../data", "/vagrant", disabled: true
+      cfg.vm.provision "shell", inline: "netsh advfirewall set allprofiles state off"   # 윈도우의 방화벽을 해제한다. 
+  end  
+
+
   #================#
   # Ansible Server #
   #================#
