@@ -24,3 +24,38 @@
       apt: pkg=nginx state=present update_cache=yes
     - name: Upload default index.html for web server
       get_url: url=https://www.apache.com dest=/usr/share/nginx/html/ mode=0644 validate_certs=no
+
+- name: Install nginx on Windows
+  hosts: Win
+  gather_facts: no
+
+  tasks:
+    - name: create directory
+      win_file:
+        path: C:\nginx
+        state: directory
+    - name: download nginx
+      win_get_url:
+        url: http://nginx.org/download/nginx-1.14.0.zip
+        dest: C:\nginx\nginx-1.40.0.zip
+    - name: unzip nginx
+      win_unzip:
+        src: C:\nginx\nginx-1.40.0.zip
+        dest: C:\nginx
+        delete_archive: yes
+    - name: install NSSM
+      win_chocolatey:   # 초코레이티를 이용하여 윈도우에서도 패키지의 이름만으로 설치 가능
+        name: nssm
+    - name: download new index.html
+      win_get_url:
+        url: https://www.nginx.com
+        dest: C:\nginx\nginx-1.14.0\html\index.html
+    - name: nginx service on by NSSM
+      win_nssm:   # nssm은 실행 파일로만 존재하는 nginx를 서비스로 등록하고 운용 가능하도록 해준다.
+        name: nginx
+        application: C:\nginx\nginx-1.14.0\nginx.exe
+        state: present
+    - name: restart nginx service
+      win_service:
+        name: nginx
+        state: restarted
